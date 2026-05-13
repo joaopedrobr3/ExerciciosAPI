@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.serratec.Aula03.Domain.Cliente;
 import org.serratec.Aula03.Repository.ClienteRepository;
+import org.serratec.Aula03.exeption.RecursoNaoEncontradoException;
 
 @RestController
 @RequestMapping("/cliente")
@@ -36,7 +37,7 @@ public class ClienteController {
      @GetMapping("/{id}")
 	public Cliente buscarPorId(@PathVariable Long id) {
 		 return clienteRepository.findById(id).orElseThrow(() -> 
-		new org.serratec.Aula03.exeption.RecursoNaoEncontradoException("Cliente não encontrado com o ID: " + id));
+		new RecursoNaoEncontradoException("Cliente não encontrado com o ID: " + id));
 		
 		
 	}
