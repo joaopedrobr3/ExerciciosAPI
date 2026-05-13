@@ -8,6 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Pedido {
@@ -15,13 +19,17 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
-
+    
+    @NotBlank(message = "A descrição é obrigatória")
+    @Size(max = 60, message = "A descrição deve conter no máximo 60 caracteres")
     @Column(name = "descricao", length = 60, nullable = false)
     private String descricao;
-
+    
+    @DecimalMin(value = "0.01", message = "O total deve ser maior que zero")
+    @NotNull(message = "O total é obrigatório")
     @Column(name = "total", nullable = false)
     private BigDecimal total;
-
+    
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 

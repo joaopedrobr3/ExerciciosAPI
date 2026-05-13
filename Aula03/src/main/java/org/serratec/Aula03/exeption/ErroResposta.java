@@ -1,30 +1,31 @@
 package org.serratec.Aula03.exeption;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ErroResposta {
    
-    private String mensagem;
+    private String titulo;
     private int status;
-    private LocalDate dataHora;
+    private LocalDateTime dataHora;
     private List<String> erros;
-
     
-
-    public ErroResposta(String mensagem, int status) {
-        this.mensagem = mensagem;
+    public ErroResposta(String titulo, int status, LocalDateTime dataHora, List<String> erros) {
+        this.titulo = titulo;
         this.status = status;
-
+        this.dataHora = dataHora;
+        this.erros = erros;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
+
 
     public int getStatus() {
         return status;
@@ -33,4 +34,24 @@ public class ErroResposta {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public List<String> getErros() {
+        return erros;
+    }
+
+    public void setErros(List<String> erros) {
+        this.erros = erros;
+    }
+
+    
+    
+    
 }

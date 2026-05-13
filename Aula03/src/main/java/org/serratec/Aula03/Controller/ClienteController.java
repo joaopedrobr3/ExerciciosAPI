@@ -34,14 +34,13 @@ public class ClienteController {
      }
 
      @GetMapping("/{id}")
-	public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
-		Optional<Cliente> cliente = clienteRepository.findById(id);
+	public Cliente buscarPorId(@PathVariable Long id) {
+		 return clienteRepository.findById(id).orElseThrow(() -> 
+		new org.serratec.Aula03.exeption.RecursoNaoEncontradoException("Cliente não encontrado com o ID: " + id));
 		
-		if(cliente.isPresent()) {
-			return ResponseEntity.ok(cliente.get());
-		}
-		return ResponseEntity.notFound().build();
+		
 	}
+
 
      @PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
