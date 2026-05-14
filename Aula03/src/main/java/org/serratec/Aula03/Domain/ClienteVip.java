@@ -3,7 +3,7 @@ package org.serratec.Aula03.Domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "cliente_vip")
 @DiscriminatorValue("VIP")
-@PrimaryKeyJoinColumn(name = "id_cliente")
+
 public class ClienteVip extends Cliente {
 
     @NotBlank(message = "Consultor responsável é obrigatório")
