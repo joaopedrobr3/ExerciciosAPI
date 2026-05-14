@@ -15,6 +15,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -53,13 +54,18 @@ public class Cliente extends PessoaBase {
     private LocalDate dataNascimento;
     
     @Embedded
+    @Valid
     private DocumentoCliente documentoCliente;
     
+
     @Enumerated(EnumType.STRING)
+    @Valid
+    @Column(name = "tipo_cliente")
     private TipoCliente tipo;
     
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
+    @Valid
     private StatusCliente status;
 
     public Cliente() {
