@@ -3,19 +3,32 @@ package org.serratec.Aula03.Domain;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
+import org.serratec.Aula03.enumerated.StatusCliente;
+import org.serratec.Aula03.enumerated.TipoCliente;
 
 @Entity
 @Table(name = "cliente")
-public class Cliente {
+// Configuração de herança para permitir subclasses de Cliente, como ClientePremium
+@Inheritance(strategy = InheritanceType.JOINED)
+// Configuração da coluna discriminadora para identificar o tipo de cliente (normal ou premium)
+@DiscriminatorColumn(name = "cliente_tipo", discriminatorType = DiscriminatorType.STRING)
+public class Cliente extends PessoaBase {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,16 +51,28 @@ public class Cliente {
 
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+    
+    @Embedded
+    private DocumentoCliente documentoCliente;
+    
+    @Enumerated(EnumType.STRING)
+    private TipoCliente tipo;
+    
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusCliente status;
 
     public Cliente() {
     }
 
-    public Cliente(Long id, String nome, String email, String cpf, LocalDate dataNascimento) {
+    public Cliente(Long id, String nome, String email, String cpf, LocalDate dataNascimento, TipoCliente tipo, StatusCliente status) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
+        this.tipo = tipo;
+        this.status = status;
     }
 
     public Long getId() {
@@ -79,7 +104,7 @@ public class Cliente {
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf.replaceAll("[^0-9]", "");
+        this.cpf = cpf;
     }
 
     public LocalDate getDataNascimento() {
@@ -88,5 +113,29 @@ public class Cliente {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public DocumentoCliente getDocumentoCliente() {
+        return documentoCliente;
+    }
+
+    public void setDocumentoCliente(DocumentoCliente documentoCliente) {
+        this.documentoCliente = documentoCliente;
+    }
+
+    public TipoCliente getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoCliente tipo) {
+        this.tipo = tipo;
+    }
+
+    public StatusCliente getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusCliente status) {
+        this.status = status;
     }
 }

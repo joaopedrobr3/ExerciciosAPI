@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.serratec.Aula03.Domain.Cliente;
 import org.serratec.Aula03.Repository.ClienteRepository;
+import org.serratec.Aula03.enumerated.StatusCliente;
+import org.serratec.Aula03.enumerated.TipoCliente;
+import org.serratec.Aula03.exeption.EnumValidationException;
 import org.serratec.Aula03.exeption.RecursoNaoEncontradoException;
 
 @RestController
@@ -103,7 +105,31 @@ public class ClienteController {
 		}
 		return ResponseEntity.notFound().build();
 	}
-
-
      
+    @GetMapping("/status/{status}")
+public ResponseEntity<List<Cliente>> buscarPorStatus(@PathVariable StatusCliente status) throws EnumValidationException {
+    // Converter para maiúsculas e validar usando o método verifica() do enum
+    StatusCliente statusEnum = StatusCliente.verifica(status.name().toUpperCase());
+    List<Cliente> clientes = clienteRepository.findByStatus(statusEnum);
+    
+    if(clientes.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+    
+    return ResponseEntity.ok(clientes);
+
 }
+ @GetMapping("/tipo/{TipoCliente}")
+public ResponseEntity<List<Cliente>> buscarPorTipoCliente(@PathVariable TipoCliente tipo) throws EnumValidationException {
+    // Converter para maiúsculas e validar usando o método verifica() do enum
+    TipoCliente tipoEnum = TipoCliente.verifica(tipo.name().toUpperCase());
+    List<Cliente> clientes = clienteRepository.findByTipo(tipoEnum);
+    
+    if(clientes.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+    
+    return ResponseEntity.ok(clientes);
+	
+}
+} 
